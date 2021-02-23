@@ -10,9 +10,9 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="ToDoList" component={ToDoList} />
-      <Stack.Screen name="ToDoDetails" component={ToDoDetails} />
       <Stack.Screen name="ToDoCreate" component={ToDoCreate} />
+      <Stack.Screen name="ToDoList" component={ToDoList} />
+      {/* <Stack.Screen name="ToDoDetails" component={ToDoDetails} /> */}
     </Stack.Navigator>
   );
 }

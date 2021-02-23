@@ -7,7 +7,7 @@ const ToDoList = () => {
       <Header
         leftComponent={{ icon: "menu", color: "#fff" }}
         centerComponent={{ text: "ToDo List", style: { color: "#fff" } }}
-        rightComponent={{ icon: "home", color: "#fff" }}
+        rightComponent={{ icon: "googleplus", color: "#fff" }}
       />
       <Text>ToDos List</Text>
     </View>
