@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { View, Button, TextInput, ScrollView, StyleSheet } from "react-native";
-import DatePicker from "react-native-datepicker";
 import firebase from "../database/firebase";
 
 const ToDoCreate = (props) => {
@@ -21,16 +20,6 @@ const ToDoCreate = (props) => {
       <View style={styles.inputGroup}>
         <TextInput placeholder="Date DD-MM-YYYY" onChangeText={(value) => handleChangeText("date", value)} />
       </View>
-      {/*       <View style={styles.inputGroup}>
-        <DatePicker
-          mode="date"
-          placeholder="select date"
-          format="DD-MM-YYYY"
-          confirmBtnText="Confirm"
-          cancelBtnText="Cancel"
-          onChangeDate={(value) => handleChangeText("date", value)}
-        />
-      </View> */}
       <View>
         <Button title="Save ToDo" onPress={() => firebase.addToDo(state)} />
       </View>

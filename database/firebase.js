@@ -46,11 +46,28 @@ const addToDo = async (state) => {
     alert("Plese complete the name field");
   } else {
     try {
-      await firebase.db.collection("todos").add({
+      await firebase.firestore().collection("todos").add({
         name: state.name,
         description: state.description,
         date: state.date,
         status: state.status,
+      });
+      props.navigation.navigate("ToDoList");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+const addUser = async (state) => {
+  if (state.username === "") {
+    alert("Plese complete the name field");
+  } else {
+    try {
+      await firebase.firestore().collection("todos").add({
+        username: state.username,
+        pass: state.pass,
+        todos: {},
       });
       props.navigation.navigate("ToDoList");
     } catch (error) {
@@ -66,5 +83,6 @@ export default {
   updateToDo,
   deleteToDoById,
   addToDo,
+  addUser,
   db,
 };
