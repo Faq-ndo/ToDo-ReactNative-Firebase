@@ -3,14 +3,14 @@ import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } f
 import firebase from '../firebase/firebase';
 
 
-export default class ToDoCreate extends Component {
+export default class Login extends Component {
   
   constructor() {
     super();
     this.state = { 
-      userId: firebase.auth().currentUser.uid,
-      title: '',
-      description: '',
+      email: '', 
+      password: '',
+      isLoading: false
     }
   }
 
@@ -20,16 +20,27 @@ export default class ToDoCreate extends Component {
     this.setState(state);
   }
 
-  registerUser = () => {
-      const db = firebase.firestore();
-      db.collection('tasks').add({uuid: this.state.userId  ,  title: this.state.title, description: this.state.description })
-       this.setState({
-        task: '',
-        title: '',
-        description: '',
-        isLoading: false
+  userLogin = () => {
+    if(this.state.email === '' && this.state.password === '') {
+      Alert.alert('Enter details to signin!')
+    } else {
+      this.setState({
+        isLoading: true,
+      })
+      firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then((res) => {
+        this.setState({
+          isLoading: false,
+          email: '', 
+          password: ''
         })
-  } 
+        this.props.navigation.navigate('Dashboard')
+      })
+      .catch(error => this.setState({ errorMessage: error.message }))
+    }
+  }
 
   render() {
     if(this.state.isLoading){
@@ -43,21 +54,29 @@ export default class ToDoCreate extends Component {
       <View style={styles.container}>  
         <TextInput
           style={styles.inputStyle}
-          placeholder="Title"
-          value={this.state.title}
-          onChangeText={(val) => this.updateInputVal(val, 'title')}
+          placeholder="Email"
+          value={this.state.email}
+          onChangeText={(val) => this.updateInputVal(val, 'email')}
         />
         <TextInput
           style={styles.inputStyle}
-          placeholder="Description"
-          value={this.state.description}
-          onChangeText={(val) => this.updateInputVal(val, 'description')}
-        />
+          placeholder="Password"
+          value={this.state.password}
+          onChangeText={(val) => this.updateInputVal(val, 'password')}
+          maxLength={15}
+          secureTextEntry={true}
+        />   
         <Button
           color="#3740FE"
-          title="Signup"
-          onPress={() =>   this.props.navigation.navigate('Dashboard')}
-        />
+          title="Signin"
+          onPress={() => this.userLogin()}
+        />   
+
+        <Text 
+          style={styles.loginText}
+          onPress={() => this.props.navigation.navigate('Signup')}>
+          Don't have account? Click here to signup
+        </Text>                          
       </View>
     );
   }
