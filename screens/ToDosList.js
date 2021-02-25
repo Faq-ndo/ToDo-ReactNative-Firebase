@@ -3,11 +3,16 @@ import { StyleSheet, View, Button } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase from '../firebase/firebase';
 
-export default class Dashboard extends Component {
-  constructor() {
-    super();
-    this.state = { uid: '', name: '', email: '' }
-    this.tasks = { title: '', description: '' };
+export default class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.db = firebase.firestore().collection('tasks');
+    this.state = {
+      isLoading: true, 
+      tasks: [],
+    }
+
+    this.navigate = this.props.navigation.navigate;
   }
 
   signOut = () => {
@@ -19,34 +24,41 @@ export default class Dashboard extends Component {
 
   getCreateView = () =>  this.props.navigation.navigate('ToDoCreate');
 
-  getDetailsView = () => this.props.navigation.navigate('ToDoDetails');
+  getDetailsView = () => this.props.navigation.navigate('ToDoDetails', {uuidTask: this.db.get('ui')});
 
-  getTasks = () => {
-      const db = firebase.firestore();
-       db.collection('tasks').onSnapshot(query => {
-       const tasks = [];
-      query.docs.forEach((doc) => {
-       const {uuid, title, description } = doc.data();
+  componentDidMount() {
+    this.unsubscribe = this.db.onSnapshot(this.getTasks);
+  }
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  getTasks = query => {
+    const tasks = [];
+
+    query.forEach((doc) => {
+      const { uuid, title, description } = doc.data();
       if (uuid === firebase.auth().currentUser.uid) 
-          tasks.push({uuid: uuid, title: title, description: description}) 
-      })
-    console.log(tasks.map((_, key, taks) => taks[key]))
-    });
+        tasks.push({uuid: uuid, title: title, description: description, uid: doc.id});
+    })
+    this.setState({ tasks, isLoading: false, })
   }
   
   render() {
-     this.state = { uid: firebase.auth().currentUser.uid, name: firebase.auth().currentUser.displayName, email: firebase.auth().currentUser.email,  }   
     return (
       <View style={styles.container}>
-        <ListItem style={styles.listItem} onPress={() => {
-          this.getTasks()
-          this.getDetailsView();
-        }
-          }> 
-          <ListItem.Content >
-              <ListItem.Title>Tareas asociadas</ListItem.Title>
-            </ListItem.Content>
-        </ListItem>
+    {
+            this.state.tasks.map((_,key, tasks) => {
+              return (
+                <ListItem chevron bottomDivider key={tasks[key].uuid} onPress={_ => this.props.navigation.navigate('ToDoDetails', {uuidTask: tasks[key].uid})}>
+                  <ListItem.Content>
+                    <ListItem.Title>{tasks[key].title}</ListItem.Title>
+                  </ListItem.Content>
+                </ListItem>
+              );
+            })
+          }
         <Button
           color="#3740FE"
           title="Create task"

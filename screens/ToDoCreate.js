@@ -55,7 +55,7 @@ export default class ToDoCreate extends Component {
         />
         <Button
           color="#3740FE"
-          title="Signup"
+          title="Crear"
           onPress={() =>   {
             this.addTask()
             this.props.navigation.navigate('Dashboard');
