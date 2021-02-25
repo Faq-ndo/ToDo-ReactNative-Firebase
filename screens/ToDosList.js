@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, Button } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase from '../firebase/firebase';
@@ -6,12 +6,8 @@ import firebase from '../firebase/firebase';
 export default class Dashboard extends Component {
   constructor() {
     super();
-    this.state = { 
-      uid: '',
-      title: '',
-      description: '',
-    }
-
+    this.state = { uid: '', name: '', email: '' }
+    this.tasks = { title: '', description: '' };
   }
 
   signOut = () => {
@@ -21,11 +17,13 @@ export default class Dashboard extends Component {
     .catch(error => this.setState({ errorMessage: error.message }))
   }  
 
-  getCreateView = () =>  this.props.navigation.navigate('ToDoCreate')
+  getCreateView = () =>  this.props.navigation.navigate('ToDoCreate');
+
+  getDetailsView = () => this.props.navigation.navigate('ToDoDetails');
 
   getTasks = () => {
       const db = firebase.firestore();
-     db.collection('tasks').onSnapshot(query => {
+       db.collection('tasks').onSnapshot(query => {
        const tasks = [];
       query.docs.forEach((doc) => {
        const {uuid, title, description } = doc.data();
@@ -35,16 +33,16 @@ export default class Dashboard extends Component {
     console.log(tasks.map((_, key, taks) => taks[key]))
     });
   }
-          
+  
   render() {
- this.state = { 
-      displayName: firebase.auth().currentUser.displayName,
-      email: firebase.auth().currentUser.email,
-      uid: firebase.auth().currentUser.uid,
-    }   
+     this.state = { uid: firebase.auth().currentUser.uid, name: firebase.auth().currentUser.displayName, email: firebase.auth().currentUser.email,  }   
     return (
       <View style={styles.container}>
-        <ListItem onPress={() => this.getTasks()}> 
+        <ListItem style={styles.listItem} onPress={() => {
+          this.getTasks()
+          this.getDetailsView();
+        }
+          }> 
           <ListItem.Content >
               <ListItem.Title>Tareas asociadas</ListItem.Title>
             </ListItem.Content>
@@ -76,5 +74,8 @@ const styles = StyleSheet.create({
   textStyle: {
     fontSize: 15,
     marginBottom: 20
-  }
+  }, 
+  listItem: {
+    backgroundColor: '#c7c1c1'
+  } 
 });

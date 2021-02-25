@@ -8,6 +8,7 @@ import Login from './screens/login';
 import Signup from './screens/signup';
 import Dashboard from './screens/ToDosList';
 import ToDoCreate from './screens/ToDoCreate';
+import ToDoDetails from './screens/ToDoDetails';
 
 
 const Stack = createStackNavigator();
@@ -52,6 +53,14 @@ function MyStack() {
        component={ToDoCreate} 
        options={
          { title: 'ToDoCreate' },
+         {headerLeft: null} 
+       }
+      />
+           <Stack.Screen 
+       name="ToDoDetails" 
+       component={ToDoDetails} 
+       options={
+         { title: 'ToDoDetails' },
          {headerLeft: null} 
        }
       />
