@@ -20,7 +20,7 @@ export default class ToDoCreate extends Component {
     this.setState(state);
   }
 
-  registerUser = () => {
+  addTask = () => {
       const db = firebase.firestore();
       db.collection('tasks').add({uuid: this.state.userId  ,  title: this.state.title, description: this.state.description })
        this.setState({
@@ -56,7 +56,10 @@ export default class ToDoCreate extends Component {
         <Button
           color="#3740FE"
           title="Signup"
-          onPress={() =>   this.props.navigation.navigate('Dashboard')}
+          onPress={() =>   {
+            this.addTask()
+            this.props.navigation.navigate('Dashboard');
+          }}
         />
       </View>
     );
