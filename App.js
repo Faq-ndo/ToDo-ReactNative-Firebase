@@ -1,13 +1,16 @@
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import Login from './screens/login';
-import Signup from './screens/signup';
-import Dashboard from './screens/ToDosList';
-import ToDoCreate from './screens/ToDoCreate';
-import ToDoDetails from './screens/ToDoDetails';
-
+import Login from "./screens/login";
+import Signup from "./screens/signup";
+import Dashboard from "./screens/ToDosList";
+import ToDoCreate from "./screens/ToDoCreate";
+import ToDoDetails from "./screens/ToDoDetails";
+import AddToDoButton from "./components/AddToDoButton";
+import LogOutButton from "./components/LogOutButton";
+import BackButton from "./components/BackButton";
+import LenguageButton from "./components/LenguageButton";
 
 const Stack = createStackNavigator();
 
@@ -16,51 +19,40 @@ function MyStack() {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerTitleAlign: 'center',
+        headerTitleAlign: "center",
         headerStyle: {
-          backgroundColor: '#3740FE',
+          backgroundColor: "#30085b",
         },
-        headerTintColor: '#fff',
+        headerTintColor: "#fff",
         headerTitleStyle: {
-          fontWeight: 'bold',
+          fontWeight: "bold",
         },
-      }}>
-      <Stack.Screen 
-        name="Signup" 
-        component={Signup} 
-        options={{ title: 'Signup' }}
-      />       
-      <Stack.Screen 
-        name="Login" 
-        component={Login} 
-        options={
-          {title: 'Login'},
-          {headerLeft: null} 
-        }
+      }}
+    >
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{ title: "Sign Up", headerLeft: () => <BackButton backTo="Login" /> }}
       />
-      <Stack.Screen 
-       name="Dashboard" 
-       component={Dashboard} 
-       options={
-         { title: 'Dashboard' },
-         {headerLeft: null} 
-       }
+      <Stack.Screen name="Login" component={Login} options={{ title: "Log In", headerRight: () => <LenguageButton /> }} />
+      <Stack.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{ title: "Dashboard", headerLeft: () => <AddToDoButton />, headerRight: () => <LogOutButton /> }}
       />
-      <Stack.Screen 
-       name="ToDoCreate" 
-       component={ToDoCreate} 
-       options={
-         { title: 'ToDoCreate' },
-         {headerLeft: null} 
-       }
+      <Stack.Screen
+        name="ToDoCreate"
+        component={ToDoCreate}
+        options={{
+          title: "Create ToDo",
+          headerLeft: () => <BackButton backTo="Dashboard" />,
+          headerRight: () => <LogOutButton />,
+        }}
       />
-      <Stack.Screen 
-       name="ToDoDetails" 
-       component={ToDoDetails} 
-       options={
-         { title: 'ToDoDetails' },
-         {headerLeft: null} 
-       }
+      <Stack.Screen
+        name="ToDoDetails"
+        component={ToDoDetails}
+        options={{ title: "ToDo Details", headerLeft: () => <BackButton backTo="Dashboard" /> }}
       />
     </Stack.Navigator>
   );
