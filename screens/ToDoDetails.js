@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Button, Text, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { View, Button } from 'react-native';
 import { ListItem, CheckBox } from 'react-native-elements';
 import firebase from '../firebase/firebase';
 
@@ -12,7 +12,10 @@ export default class ToDoDetails extends React.Component {
       uuidTask: this.props.route.params.uuidTask,
       tasks: [],
     }
+    this.db = firebase.firestore().collection('tasks').doc(this.state.uuidTask);
   }
+
+  getDetailsView = () =>  this.props.navigation.navigate('Dashboard');
 
   isChecked = () => { 
     this.setState((state) => {
@@ -21,55 +24,43 @@ export default class ToDoDetails extends React.Component {
     });
   }
 
-  getDetailsView = () =>  this.props.navigation.navigate('Dashboard');
-
   componentDidMount() {
-    const db = firebase.firestore().collection('tasks').doc(this.state.uuidTask);
     const tasks = [];
 
-    db.get().then((res) => {
+    this.db.get().then((res) => {
       const { title, description } = res.data();
-      tasks.push({
-        title: title,
-        description: description,
-        isLoading: false,
-      })
-      this.setState({tasks, isLoading: false})
+      tasks.push({ title: title,  description: description })
+
+      this.setState({ tasks, isLoading: false})
     })
   }
 
   deleteTask = check => {
-    const db = firebase.firestore().collection('tasks').doc(this.state.uuidTask);
-    if (check) {
-    db.delete().then(_ => {
-        console.log('eliminado')
-        this.getDetailsView()
-    })
-  } else {
-    console.log('No se eliminó!')
+    if (check) 
+      this.db.delete().then(() => this.getDetailsView())
   }
-  }
-
+  
   render() {
-    console.log(this.state.checked); 
     return (
-      <View>
-    {
-            this.state.tasks.map((_,key, task) => {
-              return (
-                <ListItem CheckBox ={{ checkedIcon: 'circle',}}>
-                   <ListItem.Content> 
-                   <ListItem.Title>
-                      <CheckBox checked={this.state.checked} onPress={this.isChecked} />
-                      {task[key].title}
-                      <ListItem.Subtitle>{task[key].description}</ListItem.Subtitle> 
-                   </ListItem.Title> 
-                   </ListItem.Content>
-                </ListItem>
+    <View> 
+      {
+      this.state.tasks.map((_, key, task) => {
+        return (
+        <ListItem>
+          <ListItem.Content>
+            <ListItem.Title>
+            <CheckBox  
+            checked={ this.state.checked }
+             onPress={ this.isChecked } /> 
+             { task[key].title }
+            <ListItem.Subtitle>{ task[key].description }</ListItem.Subtitle>
+            </ListItem.Title> 
+            </ListItem.Content>
+            </ListItem>
               );
             })
           }
-          <Button color="#3740FE" title="Volver" onPress={() => this.getDetailsView()}   />
+          <Button color='#3740fe' title='Volver' onPress={ () => this.getDetailsView() } />
       </View>
     );
   }

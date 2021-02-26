@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import React from 'react';
+import { StyleSheet, View, TextInput, Button, ActivityIndicator } from 'react-native';
 import firebase from '../firebase/firebase';
 
 
-export default class ToDoCreate extends Component {
+export default class ToDoCreate extends React.Component {
   
   constructor() {
     super();
@@ -54,13 +54,14 @@ export default class ToDoCreate extends Component {
           onChangeText={(val) => this.updateInputVal(val, 'description')}
         />
         <Button
-          color="#3740FE"
-          title="Crear"
+          color='#3740fe'
+          title='Crear'
           onPress={() =>   {
             this.addTask()
             this.props.navigation.navigate('Dashboard');
           }}
         />
+        <Button color='#3740fe' title='Volver' onPress={() => this.props.navigation.navigate('Dashboard')} />
       </View>
     );
   }

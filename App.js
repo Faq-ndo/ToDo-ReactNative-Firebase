@@ -1,5 +1,3 @@
-// App.js
-
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,7 +14,7 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator
-      initialRouteName="Signup"
+      initialRouteName="Login"
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
@@ -56,7 +54,7 @@ function MyStack() {
          {headerLeft: null} 
        }
       />
-           <Stack.Screen 
+      <Stack.Screen 
        name="ToDoDetails" 
        component={ToDoDetails} 
        options={

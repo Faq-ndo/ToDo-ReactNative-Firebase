@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import firebase from '../firebase/firebase';
 
 
-export default class Login extends Component {
+export default class Login extends React.Component {
   
   constructor() {
     super();
