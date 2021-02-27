@@ -14,6 +14,7 @@ import LenguageButton from "./components/LenguageButton";
 
 import './config/i18next-config';
 
+
 const Stack = createStackNavigator();
 
 function MyStack() {

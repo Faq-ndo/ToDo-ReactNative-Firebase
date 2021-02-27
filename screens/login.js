@@ -16,8 +16,6 @@ class Login extends React.Component {
     };
   }
 
-
-
   updateInputVal = (val, prop) => {
     const state = this.state;
     state[prop] = val;
@@ -48,7 +46,6 @@ class Login extends React.Component {
 
   render() {
     const { t } = this.props;
-    console.log(t('Email'))
     
     if (this.state.isLoading) {
       return (
@@ -64,29 +61,27 @@ class Login extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
-          placeholder="Email"
+          placeholder={t('Email')}
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, "email")}
         />
         <TextInput
           style={styles.inputStyle}
-          placeholder="Password"
+          placeholder={t("Password")}
           value={this.state.password}
           onChangeText={(val) => this.updateInputVal(val, "password")}
           maxLength={15}
           secureTextEntry={true}
         />
-        <Button color="#73419c" title="Signin" onPress={() => this.userLogin()} />
+        <Button color="#73419c" title={t("Signin")} onPress={() => this.userLogin()} />
 
         <Text style={styles.loginText} onPress={() => this.props.navigation.navigate("Signup")}>
-          Don't have account? Click here to signup
+          {t("Don't have account? Click here to signup")}
         </Text>
       </View>
     );
   }
 }
-
-export default withTranslation()(Login);
 
 const styles = StyleSheet.create({
   container: {
@@ -121,3 +116,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+
+export default withTranslation()(Login);

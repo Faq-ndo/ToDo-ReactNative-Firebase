@@ -2,11 +2,9 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from "react-native";
 import firebase from "../firebase/firebase";
 
-import '../config/i18next-config';
-import {useTranslation} from 'react-i18next';
-import i18next from "i18next";
+import { withTranslation, useTranslation } from 'react-i18next';
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -51,6 +49,8 @@ export default class Signup extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
+
     if (this.state.isLoading) {
       return (
         <View style={styles.preloader}>
@@ -62,28 +62,28 @@ export default class Signup extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
-          placeholder="Name"
+          placeholder={t("Name")}
           value={this.state.displayName}
           onChangeText={(val) => this.updateInputVal(val, "displayName")}
         />
         <TextInput
           style={styles.inputStyle}
-          placeholder="Email"
+          placeholder={t("Email")}
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, "email")}
         />
         <TextInput
           style={styles.inputStyle}
-          placeholder="Password"
+          placeholder={t("Password")}
           value={this.state.password}
           onChangeText={(val) => this.updateInputVal(val, "password")}
           maxLength={15}
           secureTextEntry={true}
         />
-        <Button color="#73419c" title="Signup" onPress={() => this.registerUser()} />
+        <Button color="#73419c" title={t("Signup")} onPress={() => this.registerUser()} />
 
         <Text style={styles.loginText} onPress={() => this.props.navigation.navigate("Login")}>
-          Already Registered? Click here to login
+          {t("Already Registered? Click here to login")}
         </Text>
       </View>
     );
@@ -123,3 +123,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+export default withTranslation()(Signup);
