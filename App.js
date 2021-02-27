@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "./screens/login";
-import Signup from "./screens/signup";
+import Signup from "./screens/Signup";
 import Dashboard from "./screens/ToDosList";
 import ToDoCreate from "./screens/ToDoCreate";
 import ToDoDetails from "./screens/ToDoDetails";
@@ -11,6 +11,8 @@ import AddToDoButton from "./components/AddToDoButton";
 import LogOutButton from "./components/LogOutButton";
 import BackButton from "./components/BackButton";
 import LenguageButton from "./components/LenguageButton";
+
+import './config/i18next-config';
 
 const Stack = createStackNavigator();
 

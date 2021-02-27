@@ -2,6 +2,10 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from "react-native";
 import firebase from "../firebase/firebase";
 
+import '../config/i18next-config';
+import {useTranslation} from 'react-i18next';
+import i18next from "i18next";
+
 export default class Signup extends React.Component {
   constructor() {
     super();

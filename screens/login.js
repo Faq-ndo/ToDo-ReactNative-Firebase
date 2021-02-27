@@ -2,7 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from "react-native";
 import firebase from "../firebase/firebase";
 
-export default class Login extends React.Component {
+import { withTranslation, useTranslation } from 'react-i18next';
+
+
+class Login extends React.Component {
+  
   constructor() {
     super();
     this.state = {
@@ -11,6 +15,8 @@ export default class Login extends React.Component {
       isLoading: false,
     };
   }
+
+
 
   updateInputVal = (val, prop) => {
     const state = this.state;
@@ -41,6 +47,9 @@ export default class Login extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
+    console.log(t('Email'))
+    
     if (this.state.isLoading) {
       return (
         <View style={styles.preloader}>
@@ -48,7 +57,10 @@ export default class Login extends React.Component {
         </View>
       );
     }
+    
+
     return (
+      
       <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
@@ -73,6 +85,8 @@ export default class Login extends React.Component {
     );
   }
 }
+
+export default withTranslation()(Login);
 
 const styles = StyleSheet.create({
   container: {
