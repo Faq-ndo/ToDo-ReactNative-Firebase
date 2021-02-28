@@ -27,6 +27,12 @@ i18n.use(initReactI18next).init({
           "Password": "Contraseña",
           "Signup": "Inscribirse",
           "Already Registered? Click here to login": "¿Ya estas registrado?,haz click aquí para entrar",
+           //App
+           "Dashboard":"Dashboard",
+           "app_Sign_up":"Registrarse",
+           "Log In": "Log In",
+           "Create ToDo": "Crear ToDo",
+           "ToDo Details": "ToDo Detalles",
            
         },
       },
@@ -34,7 +40,7 @@ i18n.use(initReactI18next).init({
         translation: {
           //login
           "Email":"Email",  
-          "Signin": "Signin",
+          "Signin": "Sign In",
           "Don't have account? Click here to signup": "Don't have account? Click here to signup",
           //sinpup
           "Username": "Username",
@@ -44,16 +50,20 @@ i18n.use(initReactI18next).init({
           "English": "English",
           //ToDoCreate
           "Title": "Title",
-          "Description":"Descripction",
+          "Description":"Description",
           "Create":"Create",
           //Signup
           "Name": "Name",
           "Email": "Email",
           "Password": "Password",
-          "Signup": "Signup",
+          "Signup": "Sign Up",
           "Already Registered? Click here to login": "Already Registered? Click here to login",
-        
-   
+          //App
+          "Dashboard":"Dashboard",
+          "app_Sign_up":"Sign Up",
+          "Log In": "Log In",
+          "Create ToDo": "Create ToDo",
+          "ToDo Details": "ToDo Details",
         },
       },
     },
