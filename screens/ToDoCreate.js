@@ -2,7 +2,10 @@ import React from "react";
 import { StyleSheet, View, TextInput, Button, ActivityIndicator } from "react-native";
 import firebase from "../firebase/firebase";
 
-export default class ToDoCreate extends React.Component {
+import { withTranslation, useTranslation } from 'react-i18next';
+
+class ToDoCreate extends React.Component {
+
   constructor() {
     super();
     this.state = {
@@ -30,6 +33,8 @@ export default class ToDoCreate extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
+
     if (this.state.isLoading) {
       return (
         <View style={styles.preloader}>
@@ -41,19 +46,19 @@ export default class ToDoCreate extends React.Component {
       <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
-          placeholder="Title"
+          placeholder={t("Title")}
           value={this.state.title}
           onChangeText={(val) => this.updateInputVal(val, "title")}
         />
         <TextInput
           style={styles.inputStyle}
-          placeholder="Description"
+          placeholder={t("Description")}
           value={this.state.description}
           onChangeText={(val) => this.updateInputVal(val, "description")}
         />
         <Button
           color="#73419c"
-          title="Create"
+          title={t("Create")}
           onPress={() => {
             this.addTask();
             this.props.navigation.navigate("Dashboard");
@@ -97,3 +102,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+
+export default withTranslation()(ToDoCreate);

@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Login from "./screens/login";
-import Signup from "./screens/signup";
+import Signup from "./screens/Signup";
 import Dashboard from "./screens/ToDosList";
 import ToDoCreate from "./screens/ToDoCreate";
 import ToDoDetails from "./screens/ToDoDetails";
@@ -12,9 +12,14 @@ import LogOutButton from "./components/LogOutButton";
 import BackButton from "./components/BackButton";
 import LenguageButton from "./components/LenguageButton";
 
+import './config/i18next-config';
+import {useTranslation} from 'react-i18next';
+import i18next from "i18next";
+
 const Stack = createStackNavigator();
 
 function MyStack() {
+    const {t} = useTranslation();
   return (
     <Stack.Navigator
       initialRouteName="Login"
@@ -32,27 +37,24 @@ function MyStack() {
       <Stack.Screen
         name="Signup"
         component={Signup}
-        options={{ title: "Sign Up", headerLeft: () => <BackButton backTo="Login" /> }}
+        options={{ title: (t("app_Sign_up")), headerLeft: () => <BackButton backTo="Login" /> }}
       />
-      <Stack.Screen name="Login" component={Login} options={{ title: "Log In", headerRight: () => <LenguageButton /> }} />
+      <Stack.Screen name="Login" component={Login} options={{ title: (t("Log In")), headerRight: () => <LenguageButton /> }} />
       <Stack.Screen
         name="Dashboard"
         component={Dashboard}
-        options={{ title: "Dashboard", headerLeft: () => <AddToDoButton />, headerRight: () => <LogOutButton /> }}
+        options={{ title: (t("Dashboard")), headerLeft: () => <AddToDoButton />, headerRight: () => <LogOutButton /> }}
       />
       <Stack.Screen
         name="ToDoCreate"
         component={ToDoCreate}
-        options={{
-          title: "Create ToDo",
-          headerLeft: () => <BackButton backTo="Dashboard" />,
-          headerRight: () => <LogOutButton />,
+        options={{ title: (t("Create ToDo")), headerLeft: () => <BackButton backTo="Dashboard" />, headerRight: () => <LogOutButton />,
         }}
       />
       <Stack.Screen
         name="ToDoDetails"
         component={ToDoDetails}
-        options={{ title: "ToDo Details", headerLeft: () => <BackButton backTo="Dashboard" /> }}
+        options={{ title: (t("ToDo Details")), headerLeft: () => <BackButton backTo="Dashboard" /> }}
       />
     </Stack.Navigator>
   );

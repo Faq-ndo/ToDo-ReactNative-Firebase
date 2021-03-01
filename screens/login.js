@@ -2,7 +2,11 @@ import React from "react";
 import { StyleSheet, Text, View, TextInput, Button, Alert, ActivityIndicator } from "react-native";
 import firebase from "../firebase/firebase";
 
-export default class Login extends React.Component {
+import { withTranslation, useTranslation } from 'react-i18next';
+
+
+class Login extends React.Component {
+  
   constructor() {
     super();
     this.state = {
@@ -41,6 +45,8 @@ export default class Login extends React.Component {
   };
 
   render() {
+    const { t } = this.props;
+    
     if (this.state.isLoading) {
       return (
         <View style={styles.preloader}>
@@ -48,26 +54,29 @@ export default class Login extends React.Component {
         </View>
       );
     }
+    
+
     return (
+      
       <View style={styles.container}>
         <TextInput
           style={styles.inputStyle}
-          placeholder="Email"
+          placeholder={t('Email')}
           value={this.state.email}
           onChangeText={(val) => this.updateInputVal(val, "email")}
         />
         <TextInput
           style={styles.inputStyle}
-          placeholder="Password"
+          placeholder={t("Password")}
           value={this.state.password}
           onChangeText={(val) => this.updateInputVal(val, "password")}
           maxLength={15}
           secureTextEntry={true}
         />
-        <Button color="#73419c" title="Signin" onPress={() => this.userLogin()} />
+        <Button color="#73419c" title={t("Signin")} onPress={() => this.userLogin()} />
 
         <Text style={styles.loginText} onPress={() => this.props.navigation.navigate("Signup")}>
-          Don't have account? Click here to signup
+          {t("Don't have account? Click here to signup")}
         </Text>
       </View>
     );
@@ -107,3 +116,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 });
+
+
+export default withTranslation()(Login);
