@@ -46,11 +46,11 @@ export default class ToDoDetails extends React.Component {
           return (
             <ListItem>
               <ListItem.Content style={styles.container}>
-                <ListItem.Title>
-                  <CheckBox checked={this.state.checked} onPress={this.isChecked} />
-                  {task[key].title}
-                </ListItem.Title>
-                <ListItem.Subtitle style={styles.subtitle}>{task[key].description}</ListItem.Subtitle>
+                <CheckBox checked={this.state.checked} onPress={this.isChecked} />
+                <ListItem.Content style={styles.textContainer}>
+                  <ListItem.Title style={styles.title}>{task[key].title}</ListItem.Title>
+                  <ListItem.Subtitle style={styles.subtitle}>{task[key].description}</ListItem.Subtitle>
+                </ListItem.Content>
               </ListItem.Content>
             </ListItem>
           );
@@ -61,7 +61,9 @@ export default class ToDoDetails extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  subtitle: {
-    marginLeft: 65,
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "baseline",
   },
 });
